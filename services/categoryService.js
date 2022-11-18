@@ -1,10 +1,9 @@
-const CategoryModel = require("../models/categoryModel");
 const slugify = require('slugify')
 const asyncHundler = require('express-async-handler');
-const ApiError = require("../utils/ApiError");
+const CategoryModel = require('../models/categoryModel')
 
 // @disc Get list of category
-// @route Get
+// @route Get /Category
 // @access public
 exports.getCategories = asyncHundler(async(req, res) => {
   const page = req.query.page * 1 || 1;
@@ -15,7 +14,7 @@ exports.getCategories = asyncHundler(async(req, res) => {
 });
 
 // @ disc   Get spicefic category
-// @ route  GET /api/v1/categories/:id
+// @ route  GET /Category/:id
 // @ access public
 exports.getCategory = asyncHundler(async(req, res,next) => {
   const {id} = req.params;
@@ -23,28 +22,26 @@ exports.getCategory = asyncHundler(async(req, res,next) => {
   console.log("log>>>: ",category,' >>> id: ',id);
   if(category === null){
     res.status(404).json({msg: "NO category found get category"})
-    //return next(new ApiError("NO category get category !>?!?!?<!",404))
   }
   res.status(200).json({data:category})
 });
 
 // @disc create category
-// @route POST /api/v1/categories
+// @route POST /categories
 // @access Private 
 exports.createCategory = asyncHundler(async (req, res) => {
-  const name = req.body.name;
+  const {name} = req.body;
   const category = await CategoryModel.create({name,slug:slugify(name)})
   res.status(201).json({data:category})
 });
 
 // @ disc   update specific category
-// @ route  PUT /api/v1/categories/:id
+// @ route  PUT /categories/:id
 // @ access Private
-
 exports.updateCategory = asyncHundler(async(req,res)=>{
   const {id} = req.params;
   const {name} = req.body;
-  const category = await CategoryModel.findByIdAndUpdate({_id:id},{name ,slug:slugify(toString(name))},{new:true});
+  const category = await CategoryModel.findByIdAndUpdate({_id:id},{name:name ,slug:slugify(name)},{new:true});
   if(!category){
     res.status(404).json({msg: "NO category found !>?!?!?<!"})
   }
@@ -54,7 +51,7 @@ exports.updateCategory = asyncHundler(async(req,res)=>{
 
 
 // @ disc   Delete specific category
-// @ route  DELETE /api/v1/categories/:id
+// @ route  DELETE /categories/:id
 // @ access Private
 exports.deleteCategory = asyncHundler(async(req,res) => {
   const {id} = req.params;

@@ -4,11 +4,11 @@ const mongoose = require("mongoose");
 const categorySchema = new mongoose.Schema({
   name: {
     type:String,
-    required: [true , "Category requrired"],
+    required: [true , "Category name is requrired"],
     unique: [true, "must be unique"],
-    minlenght: 3,
-    maxlength:32
-  },
+    minlenght: [2,'to short name Category'],
+    maxlength:[32,'to long name Category']
+},
   slug:{
     type: String,
     lowercase: true
@@ -17,6 +17,6 @@ const categorySchema = new mongoose.Schema({
 },{timestamps:true});
 
 // create model
-const CategoryModel = mongoose.model("Category", categorySchema);
+const CategoryModel = mongoose.model('Category', categorySchema);
 
 module.exports = CategoryModel;

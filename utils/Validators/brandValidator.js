@@ -1,12 +1,12 @@
 const { check } = require("express-validator");
 const validatorMiddleware = require("../../middleware/validatorMiddleware");
 
-exports.getCategoryValidator = [
-  check("id").isMongoId().withMessage("Invalid category id format"),
+exports.getBrandValidator = [
+  check("id").isMongoId().withMessage("Invalid Brand id format"),
   validatorMiddleware,
 ];
 
-exports.createCategoryValidator = [
+exports.createBrandValidator = [
   check("name")
     .notEmpty()
     .withMessage("this fiald is requird")
@@ -17,12 +17,12 @@ exports.createCategoryValidator = [
   validatorMiddleware
 ];
 
-exports.deleteCategoryValidator = [
-  check("id").isMongoId().withMessage("Invalid category id to delete"),
+exports.deleteBrandValidator = [
+  check("id").isMongoId().withMessage("Invalid Brand id to delete"),
   validatorMiddleware,
 ];
 
-exports.updateCategoryValidator = [
-  check("id").isMongoId().withMessage("Invalid category id to update"),
+exports.updateBrandValidator = [
+  check("id").isMongoId().withMessage("Invalid Brand id to update"),
   validatorMiddleware
 ];
