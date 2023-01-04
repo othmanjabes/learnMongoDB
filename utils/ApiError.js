@@ -1,4 +1,3 @@
-
 //@disc this class is responsable about opration errors (errors i can predict)
 class ApiError extends Error{
     constructor(message, statusCode)
