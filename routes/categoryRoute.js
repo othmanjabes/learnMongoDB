@@ -14,7 +14,12 @@ router.use("/:categoryid/subcategory", subCategoryRoute);
 router
   .route("/")
   .get(Cat.getCategories)
-  .post(createCategoryValidator, Cat.createCategory);
+  .post(
+    Cat.uploadCategoryImage,
+    Cat.resizeImage,
+    createCategoryValidator,
+    Cat.createCategory
+  );
 router
   .route("/:id")
   .get(getCategoryValidator, Cat.getCategory)

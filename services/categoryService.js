@@ -1,7 +1,25 @@
+const multer = require("multer");
+
+const { v4: uuidv4 } = require('uuid');
+
 const CategoryModel = require("../models/categoryModel");
 const factory = require("./hundlersFactory");
 
-// @disc Get list of category
+const multerStorge = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    const ext = file.mimetype.split("/")[1];
+    const filename = `category-${uuidv4()}-${Date.now()}.${ext}`;
+    cb(null, filename);
+  },
+});
+
+const upload = multer({ storage: multerStorge });
+exports.uploadCategoryImage = upload.single("image");
+
+// @disc Get list of categoryt
 // @route Get /Category
 // @access public
 exports.getCategories = factory.getAll(CategoryModel);
